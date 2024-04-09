@@ -23,11 +23,21 @@ class DemoAutoSuggest():
         search_results = driver.find_elements(By.XPATH, "//div[@class='viewport']//div[1]/li")
         print(len(search_results))
         for result in search_results:
-            if 'New York(JFK)' in result.text:
+            if 'New York (JFK)' in result.text:
                 result.click()
                 time.sleep(4)
                 break
-        driver.quit()
+        
+        origin = driver.find_element(By.XPATH, "//input[@id='BE_flight_origin_date']")
+        origin.click()
+        time.sleep(2)
+        all_dates = driver.find_elements(By.XPATH, "//div[@id='monthWrapper']//tbody[@class='BE_flight_origin_date']//td[@class!='inActiveTD']")
+        for date in all_dates:
+            if date.get_attribute("data-date") == "09/04/2024":
+                date.click()
+                time.sleep(4)
+                break
+        
 
 das = DemoAutoSuggest()
 das.demo_autosuggest()
